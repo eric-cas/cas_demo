@@ -1,0 +1,9 @@
+---                                                  
+ref: cas_demo                                        
+name: cas_demo                                      
+description: A collection of stuff for ST2 demos     
+keywords:                                            
+  - demo                                             
+version: 0.0.1                                       
+author: Cloud Automation Solutions
+email: eric@cloudautomationsolutions.com             

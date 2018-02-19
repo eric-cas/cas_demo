@@ -1,0 +1,11 @@
+---
+description: "Handle a Pingdom Webhook"
+enabled: true
+runner_type: mistral-v2
+entry_point: workflows/pingdom_handler.yaml
+name: pingdom_handler
+pack: cas_demo
+parameters: 
+  json_body:
+    required: true
+    type: object

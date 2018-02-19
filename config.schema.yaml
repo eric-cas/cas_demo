@@ -1,0 +1,5 @@
+---
+  pingdom_jira_project:
+    description: "The project to use for the JIRA Ticket to open"
+    type: "string"
+    required: true

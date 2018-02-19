@@ -1,0 +1,47 @@
+version: '2.0'
+
+cas_demo.pingdom_handler:
+  description: Handle a webhook from Pingdom
+  type: direct
+  input: 
+    - json_body
+  output:
+    pingdom_info: <% $.pingdom_info %>
+  tasks:
+    read_config:
+      action: cas_demo.read_config
+      input:
+        config_file: "cas_demo.yaml"
+      publish:
+        workflow_config: <% task(read_config).result.result %>
+      on-success:
+        - pingdom_parse
+    pingdom_parse:
+      action: cas_demo.pingdom_parse
+      input:
+        json_body: <% $.json_body %>
+      publish:
+        pingdom_info: <% task(pingdom_parse).result.result %>
+      on-success:
+        - open_ticket: <% task(pingdom_parse).result.result.site_failed = true  %>
+        - no_action: <% task(pingdom_parse).result.result.site_failed = false %>
+    open_ticket:
+      action: jira.create_issue
+      input:
+        summary: "Website Down"
+        project: <% $.workflow_config.pingdom_jira_project %>
+      on-success:
+        - comment_ticket
+    comment_ticket:
+      action: jira.comment_issue
+      input:
+        comment_text: "Pingdom Detected that the website is down"
+        issue_key: <% task(open_ticket).result.result.key %>
+      on-success:
+        - end_workflow
+    no_action:
+      action: core.noop
+      on-success:
+        - end_workflow
+    end_workflow:
+      action: core.noop

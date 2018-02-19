@@ -1,0 +1,15 @@
+---
+  name: "pingdom_autoremediation"
+  pack: "cas_demo"
+  description: "Automatically take action when Pingdom shows as down"
+  enabled: true
+
+  trigger:
+    type: "core.st2.webhook"
+    parameters:
+      url: "pingdom"
+
+  action:
+    ref: "cas_demo.pingdom_handler"
+    parameters:
+      json_body: "{{trigger.body}}"

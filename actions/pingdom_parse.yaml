@@ -1,0 +1,12 @@
+---
+name: "pingdom_parse"
+runner_type: "python-script"
+description: "Parse the data from the Pingdom webhook"
+enabled: true
+entry_point: "scripts/pingdom_parse.py"
+parameters:
+  json_body:
+    type: "object"
+    description: "The JSON Body sent by the Pingdom Webhook"
+    required: true
+    position: 0
