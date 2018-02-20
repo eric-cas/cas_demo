@@ -1,0 +1,18 @@
+---
+name: "read_config"
+runner_type: "python-script"
+description: "Read the specified config yaml, and output an object with the data"
+enabled: true
+entry_point: "scripts/read_config.py"
+parameters:
+  config_file:
+    type: "string"
+    description: "The file name of the config file"
+    required: true
+    position: 0
+  config_path:
+    type: "string"
+    description: "Path to the config file"
+    required: true
+    position: 1
+    default: "/opt/stackstorm/configs"
